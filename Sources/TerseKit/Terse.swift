@@ -2,6 +2,15 @@ import Foundation
 
 /// A configured Terse client with at most one active agent connection.
 public final class Terse {
+    /// The endpoint used by a Terse client.
+    public struct Configuration: Sendable {
+        public let baseURL: URL
+
+        public init(baseURL: URL) {
+            self.baseURL = baseURL
+        }
+    }
+
     public private(set) var connection: Connection?
 
     private let transport: APITransport
@@ -11,18 +20,27 @@ public final class Terse {
         self.transport = transport
     }
     
-    /// Connect to the Backend
+    /// Creates a client using a named or inline configuration.
     public static func connect(
-        apiKey: String,
-        baseURL: URL = URL(string: "http://127.0.0.1:8790")!,
+        _ configuration: Configuration,
         session: URLSession = .shared
     ) -> Terse {
         Terse(
             transport: APITransport(
-                apiKey: apiKey,
-                baseURL: baseURL,
+                baseURL: configuration.baseURL,
                 session: session
             )
+        )
+    }
+
+    /// Creates a client using explicit connection parameters.
+    public static func connect(
+        baseURL: URL = URL(string: "http://127.0.0.1:8790")!,
+        session: URLSession = .shared
+    ) -> Terse {
+        connect(
+            Configuration(baseURL: baseURL),
+            session: session
         )
     }
 

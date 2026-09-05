@@ -79,7 +79,6 @@ public struct PromptLockedError: LocalizedError, Sendable {
 }
 
 struct APITransport {
-    let apiKey: String
     let baseURL: URL
     let session: URLSession
 }

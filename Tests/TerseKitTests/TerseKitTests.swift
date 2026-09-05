@@ -4,15 +4,29 @@ import XCTest
 @testable import TerseUI
 
 final class TerseKitTests: XCTestCase {
+    func testTerseConfigurationHoldsConnectionParameters() {
+        let configuration = Terse.Configuration(
+            baseURL: URL(string: "http://127.0.0.1:8790")!
+        )
+
+        XCTAssertEqual(configuration.baseURL.absoluteString, "http://127.0.0.1:8790")
+    }
+
+    func testTerseConnectsWithNamedConfiguration() {
+        let terse = Terse.connect(.development)
+
+        XCTAssertEqual(terse.agent("research-agent").id, "research-agent")
+    }
+
     func testTerseResolvesAgent() {
-        let terse = Terse.connect(apiKey: "test")
+        let terse = Terse.connect()
 
         XCTAssertEqual(terse.agent("research-agent").id, "research-agent")
     }
 
     @MainActor
     func testAgentObserverAppliesConnectedUserEvents() {
-        let observer = Terse.connect(apiKey: "test")
+        let observer = Terse.connect()
             .agent("research-agent")
             .observe()
         let user = ConnectUserResponse(
@@ -30,7 +44,7 @@ final class TerseKitTests: XCTestCase {
 
     @MainActor
     func testAgentObserverAppliesStreamingEvents() {
-        let observer = Terse.connect(apiKey: "test")
+        let observer = Terse.connect()
             .agent("research-agent")
             .observe()
         let generationID = UUID()
@@ -120,4 +134,10 @@ final class TerseKitTests: XCTestCase {
 
         XCTAssertEqual(error.errorDescription, "Prompt locked")
     }
+}
+
+private extension Terse.Configuration {
+    static let development = Self(
+        baseURL: URL(string: "http://127.0.0.1:8790")!
+    )
 }

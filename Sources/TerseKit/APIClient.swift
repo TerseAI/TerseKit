@@ -284,12 +284,7 @@ enum APIClient {
             string: "/v1/agents/\(encodedAgentID)/\(action)",
             relativeTo: transport.baseURL
         )!.absoluteURL
-        var request = URLRequest(url: url)
-        request.setValue(
-            "Bearer \(transport.apiKey)",
-            forHTTPHeaderField: "Authorization"
-        )
-        return request
+        return URLRequest(url: url)
     }
 
     private static func data(

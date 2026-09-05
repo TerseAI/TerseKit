@@ -60,17 +60,32 @@ Until the first tagged release is available, use the `main` branch instead:
 
 ## Setup
 
-Import the SDK and configure a `Terse` instance with the connection parameters for the current environment:
+Import the SDK and define the connection parameters for each environment in one place:
 
 ```swift
 import Foundation
 import TerseKit
 
-let terse = Terse.connect(
-    apiKey: "terse_dev_key",
-    baseURL: URL(string: "http://127.0.0.1:8790")!
-)
+extension Terse.Configuration {
+    static let development = Self(
+        baseURL: URL(string: "http://127.0.0.1:8790")!
+    )
+
+    static let production = Self(
+        baseURL: URL(string: "https://api.example.com")!
+    )
+}
+
+let terse = Terse.connect(.development)
 ```
+
+Switch environments without changing the rest of the integration:
+
+```swift
+let terse = Terse.connect(.production)
+```
+
+You can also pass `baseURL` directly for one-off configurations.
 
 Fetch an agent, connect the current user, and keep the returned connection:
 
