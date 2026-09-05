@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "TerseSwift",
+    name: "TerseKit",
     platforms: [
         .iOS(.v17),
         .macOS(.v14),
