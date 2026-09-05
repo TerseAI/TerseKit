@@ -66,7 +66,7 @@ enum APIClient {
         AsyncThrowingStream { continuation in
             let task = Task {
                 do {
-                    let descriptor = try await presence(
+                    let descriptor = try await eventSocket(
                         agentID: agentID,
                         transport: transport
                     )
@@ -77,7 +77,7 @@ enum APIClient {
                     else {
                         throw TerseAPIError(
                             status: 0,
-                            message: "The gateway returned an invalid presence URL."
+                            message: "The gateway returned an invalid event socket URL."
                         )
                     }
 
@@ -262,16 +262,16 @@ enum APIClient {
         _ = try await data(for: request, transport: transport)
     }
 
-    private static func presence(
+    private static func eventSocket(
         agentID: String,
         transport: APITransport
-    ) async throws -> PresenceResponse {
+    ) async throws -> EventSocketResponse {
         let request = request(
             agentID: agentID,
-            action: "presence",
+            action: "events",
             transport: transport
         )
-        return try await decode(PresenceResponse.self, from: request, transport: transport)
+        return try await decode(EventSocketResponse.self, from: request, transport: transport)
     }
 
     private static func request(

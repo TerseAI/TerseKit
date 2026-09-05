@@ -31,7 +31,7 @@ public final class TerseAgentObserver {
 
     /// Observes the agent until the calling task is cancelled.
     ///
-    /// The initial presence snapshot is followed by live event updates. A
+    /// The initial agent snapshot is followed by live event updates. A
     /// dropped event stream reconnects automatically after a short delay.
     public func observe() async {
         while !Task.isCancelled {

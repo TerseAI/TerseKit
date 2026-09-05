@@ -30,7 +30,7 @@ Add TerseKit to your package dependencies:
 dependencies: [
     .package(
         url: "https://github.com/TerseAI/TerseKit.git",
-        from: "0.1.0"
+        from: "0.3.0"
     )
 ]
 ```
@@ -49,7 +49,7 @@ Then add the products your target uses:
 
 `TerseUI` is optional. Omit it if you only need the core client.
 
-Until the first tagged release is available, use the `main` branch instead:
+To try unreleased changes, track the `main` branch instead:
 
 ```swift
 .package(
@@ -113,7 +113,7 @@ eventTask.cancel()
 try await terse.disconnect()
 ```
 
-Each `Terse` instance supports one active agent connection at a time. `Terse` owns the connected user and presence heartbeat, `TerseAgent` exposes agent state and events, and `Connection` contains operations performed by that connected user.
+Each `Terse` instance supports one active agent connection at a time. `Terse` owns the connected user and connection heartbeat, `TerseAgent` exposes agent state and events, and `Connection` contains operations performed by that connected user.
 
 ## SwiftUI helpers
 

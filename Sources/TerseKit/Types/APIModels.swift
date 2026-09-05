@@ -33,9 +33,9 @@ struct ListUsersResponse: Codable {
     let users: [ConnectUserResponse]
 }
 
-// MARK: - Presence
+// MARK: - Event Socket
 
-struct PresenceResponse: Codable {
+struct EventSocketResponse: Codable {
     let url: String
     let expiresAt: Double
 }
